@@ -591,7 +591,7 @@ Function check_enemy_1()
                         end if
                     end for
                 end if
-                if type(item.GetData()) = "roInteger"
+                if type(item.GetData()) = "roInteger" or type(item.GetData()) = "Integer"
                     if item.GetData() = -1
                         if m.shield_on = 0 
                             if (a-d) > -1
@@ -690,7 +690,7 @@ Function check_enemy_2()
                         end if
                     end for
                 end if
-                if type(item.GetData()) = "roInteger"
+                if type(item.GetData()) = "roInteger" or type(item.GetData()) = "Integer"
                     if item.GetData() = -1
                         if m.shield_on = 0 
                             if (a-d) > -1
@@ -740,7 +740,7 @@ Function check_enemy_bullet_collision()
     col_enemy_bullet = m.spr_enemy_bullet[a-d].CheckMultipleCollisions()
         if col_enemy_bullet <> invalid
             for each item in col_enemy_bullet
-                if type(item.GetData()) = "roInteger"
+                if type(item.GetData()) = "roInteger" or type(item.GetData()) = "Integer"
                     if item.GetData() = -1
                         if m.shield_on = 0 
                             if (a-d) > -1
