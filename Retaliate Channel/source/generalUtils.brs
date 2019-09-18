@@ -74,47 +74,19 @@ Function HSVAtoRGBA(h%,s%,v%,a%) As Integer
       end if
    end if
 
-   for c = 0 to rgb.count()-1 : rgb[c] = int(rgb[c] * 255) : end for
+   for c = 0 to rgb.count()-1
+      rgb[c] = int(rgb[c] * 255)
+   end for
    color% = (rgb[0] << 24) + (rgb[1] << 16) + (rgb[2] << 8) + a%
 
    return color%
 End Function
 
-Function get_user_purchases() as boolean
-    port = CreateObject("roMessagePort")
-    store = CreateObject("roChannelStore")
-    store.SetMessagePort(port)
-    store.GetPurchases()
-    while (true)
-        msg = wait(5000, port)
-        if (type(msg) = "roChannelStoreEvent")
-            if (msg.isRequestSucceeded())
-                purchases = msg.GetResponse()
-                if purchases.Count() > 0
-                    m.paid = true
-                end if
-                return true
-            else if (msg.isRequestFailed())
-                return false
-                'print "***** Failure: *******"
-            end if
-        end if
-    end while
-End Function
-
 Function GetVPSLocation()
+    return ""
     http = NewHttp("http://retaliate-game.com/roku/roku_vps_location.html")
     prefix = http.GetToStringWithRetry() 
     'prefix = Left(prefix, len(prefix)-1)
     prefix = prefix.Trim()
     return prefix
-End Function
-
-Function GetAdInterval()
-    http = NewHttp("http://retaliate-game.com/roku/roku_ad_interval.html")
-    interval = http.GetToStringWithRetry() 
-    'interval = Left(interval, len(interval)-1)
-    interval = interval.Trim()
-    interval = interval.toint()
-    return interval
 End Function

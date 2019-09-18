@@ -1,5 +1,4 @@
 Function HangarScreen(screen,port)
-
    'Set Variables
     selected_ship_timer = CreateObject("roTimeSpan")
     select_ship_multiplier = 0
@@ -32,7 +31,6 @@ Function HangarScreen(screen,port)
     rnd_shield_old = 0
     x_offset = 0
     y_offset = 0
-    
     'Create Timers
     ship_tilt_timer = CreateObject("roTimeSpan")
     shield_animation_timer = CreateObject("roTimeSpan")
@@ -41,8 +39,15 @@ Function HangarScreen(screen,port)
     'Create Bitmaps
     bm_double_arrow_right = CreateObject("roBitmap", "pkg:/sprites/spr_double_arrow_right.png")
     bm_double_arrow_left = CreateObject("roBitmap", "pkg:/sprites/spr_double_arrow_left.png")
-    bm_ship_logo = {ship_1: CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_ship_1.png"),ship_2: CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_ship_2.png"),ship_3: CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_ship_3.png"),ship_4: CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_ship_4.png"),ship_5: CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_ship_5.png")}
-    bm_left_side_text = [CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_body.png"),CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_trim_0.png"),CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_trim_1.png"),CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_shield.png")]
+    bm_ship_logo = {ship_1: CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_ship_1.png")
+                    ship_2: CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_ship_2.png")
+                    ship_3: CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_ship_3.png")
+                    ship_4: CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_ship_4.png")
+                    ship_5: CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_ship_5.png")}
+    bm_left_side_text = [CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_body.png"),
+                         CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_trim_0.png"),
+                         CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_trim_1.png"),
+                         CreateObject("roBitmap", "pkg:/sprites/spr_hangar_logo_shield.png")]
     bm_bar= CreateObject("roBitmap", "pkg:/sprites/spr_bar.png") 
     bm_hue= CreateObject("roBitmap", "pkg:/sprites/spr_hue.png") 
     bm_sat= CreateObject("roBitmap", "pkg:/sprites/spr_sat.png")
@@ -266,9 +271,6 @@ Function HangarScreen(screen,port)
         
         end if
         
-        
-        
-        
         'Draw Screen
         screen.Clear(black)
         
@@ -281,7 +283,6 @@ Function HangarScreen(screen,port)
             screen.DrawObject(210,55+(140*a),bm_hue)
             screen.DrawObject(210,115+(140*a),bm_sat_border)
         end for  
-        
         
         screen.DrawObject((active_ship_x + 120) +  - 110 - 64,active_ship_y + 100,bm_double_arrow_left)
         screen.DrawObject((active_ship_x + 120) + 110, active_ship_y + 100,bm_double_arrow_right)
@@ -364,14 +365,11 @@ Function HangarScreen(screen,port)
         if shield_animation_timer.TotalMilliseconds() > 50
             rnd_shield_old = rnd_shield
             shield_animation_timer.Mark()
-            set_shield_animation:
-            rnd_shield = cint(rnd(16)-1)
-            if rnd_shield = rnd_shield_old
-                goto set_shield_animation
-            end if
+            while rnd_shield = rnd_shield_old
+                rnd_shield = cint(rnd(16)-1)
+            end while
         end if
-        screen.DrawScaledObject(active_ship_x-31, active_ship_y+350, 2.0, 2.0, bm_shield[rnd_shield], m.ship_color[m.active_ship].shield.hex)
-        
+        screen.DrawScaledObject(active_ship_x-31, active_ship_y+350, 2.0, 2.0, bm_shield[rnd_shield], m.ship_color[m.active_ship].shield.hex)        
         
         'Draw Pointers
         if index = 0

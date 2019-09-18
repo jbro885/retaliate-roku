@@ -48,22 +48,7 @@ Function ScoreScreen(screen,port,results,info)
     
     'Create Sounds
     snd_move = CreateObject("roAudioResource", "navsingle")
-    
-    'Display ad if applicable
-    'print m.ad_timer.TotalMilliseconds()
-    if m.paid = false and m.ad_timer.TotalMilliseconds() >= m.ad_interval
-        'Start do something to display ads
-        adIface = Roku_Ads()
-        ' Ad URL has been removed
-        adIface.setAdUrl("Your Ad URL Here")
-        adIface.setAdExit(false)
-        adPods = adIface.getAds()
-        shouldPlayContent = adIface.showAds(adPods)
-        'End do something to display ads
-        m.ad_timer.Mark()
-        UpgradeScreen(screen,port)
-    end if
-    
+       
     'Create Initial Screen
     screen.Clear(black)
     screen.DrawObject(160,0,region_background)
@@ -441,15 +426,16 @@ Function getPromoArray()
     else
         childelements = xml.GetChildElements()
         for each item in childelements
-            x = item@x
-            y = item@y
-            w = item@w
-            h = item@h
+            attr = item.getAttributes()
+            x = attr.x
+            y = attr.y
+            w = attr.w
+            h = attr.h
             x = x.toint()
             y = y.toint()
             w = w.toint()
             h = h.toint()
-            promoarray.push({url: item@URL, x: x, y: y, w: w, h: h} )
+            promoarray.push({url: attr.URL, x: x, y: y, w: w, h: h} )
         end for
         return promoarray
     end if
@@ -470,11 +456,12 @@ Function getImageWithVideo()
     else
         childelements = xml.GetChildElements()
         for each item in childelements
-            x = item@x
-            y = item@y
+            attr = item.getAttributes()
+            x = attr.x
+            y = attr.y
             x = x.toint()
             y = y.toint()
-            image = {url: item@URL, x: x, y: y}
+            image = {url: attr.URL, x: x, y: y}
         end for
         return image
     end if

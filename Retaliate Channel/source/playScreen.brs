@@ -399,11 +399,9 @@ Function Start(screen,port,difficulty,sounds)
                     if this.shield_animation_timer.TotalMilliseconds() > 50
                         this.rnd_shield_old = this.rnd_shield
                         this.shield_animation_timer.Mark()
-                        set_shield_animation:
-                        this.rnd_shield = cint(rnd(16)-1)
-                        if this.rnd_shield = this.rnd_shield_old
-                            goto set_shield_animation
-                        end if
+                        while this.rnd_shield = this.rnd_shield_old
+                            this.rnd_shield = cint(rnd(16)-1)
+                        end while
                     end if
                     this.screen.DrawObject(this.spr_ship_x-33-9, this.ship_y-21-10, this.bm_shield[this.rnd_shield], m.ship_color[m.active_ship].shield.hex)
                 end if
@@ -457,14 +455,17 @@ Function create_enemy_2()
         m.timer_enemy_2 = 0
         m.random_number_2 = 200+rnd(500)
         if m.spr_enemy_2.Count() < 5
-            switch_position:
-            enemy_2_rnd_pos = 240+((rnd(5)-1)*180)
-            for each item in m.spr_enemy_2
-                if enemy_2_rnd_pos = item.GetX()
-                    'print "generating new position"
-                    goto switch_position
-                end if
-            end for
+            while true
+                enemy_2_rnd_pos = 240+((rnd(5)-1)*180)
+                same_pos = false
+                for each item in m.spr_enemy_2
+                    if enemy_2_rnd_pos = item.GetX()
+                        'print "generating new position"
+                        same_pos = true
+                    end if
+                end for
+                if not same_pos then exit while
+            end while
             m.spr_enemy_2.Push(m.compositor.NewSprite(enemy_2_rnd_pos, -100, m.region_enemy_2))
             m.spr_enemy_2[m.spr_enemy_2.Count()-1].SetData({timer: CreateObject("roTimeSpan"), paused_time: 0,time_without_movement: 0,random_fire: 200+rnd(m.enemy_2_speed), bullet_timer: 0, stopped: false})
             'Print "Creating new sprite 'Enemy 2' "
@@ -839,7 +840,7 @@ End Function
 
 'Draw UI elements
 Function create_ui()
-    shield_life_alpha% = m.shield_life*1.25
+    shield_life_alpha% = Int(m.shield_life*1.25)
     if shield_life_alpha% > 255
         shield_life_alpha% = 255
     else if shield_life_alpha% < 0
@@ -854,7 +855,7 @@ Function create_ui()
         y_adjustment = 15
         x_adjustment = 20
     end if
-    m.screen.DrawRect(170,680-y_adjustment,m.shield_life*3,25,m.shield_life_color-255%+shield_life_alpha%)
+    m.screen.DrawRect(170,680-y_adjustment,m.shield_life*3,25,m.shield_life_color-255+shield_life_alpha%)
     m.screen.DrawRect(0,0,156,720,m.black)
     m.screen.DrawRect(1124,0,156,720,m.black)
     m.screen.DrawText("Score: "+str(m.score),640-(m.font.GetOneLineWidth("Score: "+str(m.score),1000)/2),20,m.white,m.font)
