@@ -395,7 +395,7 @@ Function Start(screen,port,difficulty,sounds)
                         this.flame_sprite = 0
                     end if
                 end if
-                if this.shield_on
+                if this.shield_on = 1
                     if this.shield_animation_timer.TotalMilliseconds() > 50
                         this.rnd_shield_old = this.rnd_shield
                         this.shield_animation_timer.Mark()
@@ -807,7 +807,7 @@ Function shield()
                 m.shield_life = 0
             end if
         else 
-            m.spr_shield.MoveTo(-200,-200) 
+            m.spr_shield.MoveTo(-200,-200)
             if m.down_pressed = 0
                 if m.shield_life < 100
                     m.shield_life = m.shield_life + 1.2 

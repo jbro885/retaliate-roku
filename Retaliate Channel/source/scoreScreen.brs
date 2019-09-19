@@ -29,9 +29,6 @@ Function ScoreScreen(screen,port,results,info)
     if display_mode = "HDTV"
         a_word = "Retaliate"
     end if
-
-
-
     
     'Create Fonts
     font = font_registry.GetDefaultFont( font_registry.GetDefaultFontSize(), true, false) 
@@ -150,8 +147,8 @@ Function ScoreScreen(screen,port,results,info)
     end if
     
     'Fill both buffers with the main portion of the screen.
-    for a = 0 to 1
-        screen.Clear(black)
+    for a = 0 to 2
+        screen.Clear(black2)
         screen.DrawObject(160,0,region_background)
         highscore_table_y = 120
         position = 0
@@ -229,8 +226,7 @@ Function ScoreScreen(screen,port,results,info)
                 if index = 0 
                     return true
                 else 
-                    return false
-                    
+                    return false                    
                 end if
             else if code = 8 'rewind pressed
                 snd_move.Trigger(55)
@@ -241,7 +237,7 @@ Function ScoreScreen(screen,port,results,info)
                 else if m.active_score_table = "weekly"
                     m.active_score_table = "alltime"
                 end if
-                for a = 0 to 1
+                for a = 0 to 2
                     screen.Clear(black)
                     screen.DrawObject(160,0,region_background)
                     highscore_table_y = 120
@@ -309,7 +305,7 @@ Function ScoreScreen(screen,port,results,info)
                 else if m.active_score_table = "daily"
                     m.active_score_table = "alltime"
                 end if
-                for a = 0 to 1
+                for a = 0 to 2
                     screen.Clear(black)
                     screen.DrawObject(160,0,region_background)
                     highscore_table_y = 120
@@ -382,10 +378,11 @@ Function ScoreScreen(screen,port,results,info)
     screen.swapbuffers()
     end while
     
-    
 End Function
 
 Function GetScores(results,prefix)
+    return invalid
+
     score_array = { daily: [], weekly: [], alltime: [] }
     for each key in score_array
         if key <> "alltime"
@@ -416,6 +413,7 @@ Function GetScores(results,prefix)
 End Function
 
 Function getPromoArray()
+    return invalid
     promoarray = CreateObject("roArray",100,true)
     http = NewHttp("http://retaliate-game.com/roku/promoitems.xml")
     rsp = http.GetToStringWithRetry() 

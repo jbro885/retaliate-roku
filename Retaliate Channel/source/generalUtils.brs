@@ -49,7 +49,7 @@ Function HSVAtoRGBA(h%,s%,v%,a%) As Integer
    ' Romans_I_XVI port (w/ a few tweaks) of:
    ' http://schinckel.net/2012/01/10/hsv-to-rgb-in-javascript/
    
-   h% = h% MOD 360
+   h% = Int(h% MOD 360)
    
    rgb = [ 0, 0, 0 ]
    if s% = 0 then
