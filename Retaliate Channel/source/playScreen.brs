@@ -197,7 +197,7 @@ Function Start(screen,port,difficulty,sounds)
     'm.ship_color[this.active_ship].part_3.hex = HSVAtoRGBA(m.ship_color[this.active_ship].part_3.hue,m.ship_color[this.active_ship].part_3.sat,100,255)  
     'm.ship_color.shield.hex = HSVAtoRGBA(m.ship_color.shield.hue,m.ship_color.shield.sat,100,255)
     'Start music
-    this.background_music.url = "pkg:/sounds/snd_background_music.wma"
+    this.background_music.url = "pkg:/sounds/snd_background_music.mp3"
     this.audioplayer.addcontent(this.background_music)
     this.audioplayer.setloop(false)
     this.audioplayer.setmessageport(this.music_port)

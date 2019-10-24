@@ -123,6 +123,7 @@ Sub Main()
     screen=CreateObject("roScreen", true, 1280, 720)
     screen.SetPort(port)
     screen.SetAlphaEnable(true)
+    ShowIntroScreen(screen, port, info)
     for a = 0 to 1
         screen.Clear(black)
         screen.DrawObject(160,0,m.bm_background)
